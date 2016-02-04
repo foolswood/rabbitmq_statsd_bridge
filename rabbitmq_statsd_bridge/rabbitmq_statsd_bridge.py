@@ -3,17 +3,18 @@ from abc import ABCMeta, abstractmethod
 from time import sleep
 
 import requests
+import statsd
 
 
 class HttpPollMonitor:
     def __init__(
-            self, mq_base_url, stats_client, stat_base='rabbitmq',
+            self, mq_host, stats_host, mq_port=15672, stat_base='rabbitmq',
             poll_interval=10):
         self._stat_handlers = defaultdict(list)
         self._stat_base = stat_base
-        self._stats = stats_client
+        self._stats = statsd.StatsClient(stats_host)
         self._poll_interval = poll_interval
-        self._mq_base_url = mq_base_url
+        self._mq_base_url = 'http://{}:{}'.format(mq_host, mq_port)
         self._auth = requests.auth.HTTPBasicAuth('guest', 'guest')
 
     def _json_getter(self, path):
