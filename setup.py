@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='rabbitmq_statsd_bridge',
-    version='0.1a',
+    version='0.1a0',
     description='Populate statsd from rabbitmq',
     long_description='',
     # Get strings for classifiers from
