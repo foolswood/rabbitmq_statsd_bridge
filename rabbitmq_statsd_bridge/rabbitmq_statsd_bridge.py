@@ -40,7 +40,9 @@ class HttpPollMonitor:
         self._stat_handlers[stat.poll_path].append(stat.report)
 
 
-class Reporter(metaclass=ABCMeta):
+class Reporter:
+    __metaclass__ = ABCMeta
+
     def __init__(self, poll_path):
         self.poll_path = poll_path
 
@@ -51,7 +53,8 @@ class Reporter(metaclass=ABCMeta):
 
 class ReadyInQueue(Reporter):
     def __init__(self, queue, vhost='%2F'):
-        super().__init__('/api/queues/{}/{}/'.format(vhost, queue))
+        super(ReadyInQueue, self).__init__(
+            '/api/queues/{}/{}/'.format(vhost, queue))
 
     def report(self, stats_client, stat_base, poll_data):
         stats_client.gauge(
