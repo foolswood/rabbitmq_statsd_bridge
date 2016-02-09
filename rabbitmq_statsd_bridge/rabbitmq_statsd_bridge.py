@@ -23,7 +23,11 @@ class HttpPollMonitor:
 
     def _poll(self):
         for path, handlers in self._stat_handlers.items():
-            poll_data = self._json_getter(path)
+            try:
+                poll_data = self._json_getter(path)
+            except requests.ConnectionError as e:
+                print('Poll failed: ConnectionError')
+                return
             for handler in handlers:
                 handler(self._stats, self._stat_base, poll_data)
 
