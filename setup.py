@@ -13,4 +13,5 @@ setup(
     author_email='david@foolswood.co.uk',
     url='FIXME',
     license='GPL3',
-    install_requires=['requests', 'statsd'])
+    install_requires=['requests', 'statsd'],
+    packages=['rabbitmq_statsd_bridge'])
